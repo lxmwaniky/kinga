@@ -55,8 +55,12 @@ export default function App() {
     setRecords(data.reverse());
   };
 
-  const handleAnalyze = async () => {
-    if (!symptoms || !patientName) {
+  const handleAnalyze = async (overrideData?: { name: string, age: string, symptoms: string }) => {
+    const nameToUse = overrideData?.name || patientName;
+    const ageToUse = overrideData?.age || age;
+    const symptomsToUse = overrideData?.symptoms || symptoms;
+
+    if (!symptomsToUse || !nameToUse) {
       setError('Please provide patient name and symptoms');
       return;
     }
@@ -64,15 +68,15 @@ export default function App() {
     setLoading(true);
     setError(null);
     try {
-      const result = await analyzeSymptoms(symptoms, image);
+      const result = await analyzeSymptoms(symptomsToUse, image);
       setCurrentResult(result);
       
       const newRecord: PatientRecord = {
         id: crypto.randomUUID(),
         timestamp: Date.now(),
-        patientName,
-        age,
-        symptoms,
+        patientName: nameToUse,
+        age: ageToUse,
+        symptoms: symptomsToUse,
         image,
         urgency: result.level,
         advice: result.advice,
@@ -313,18 +317,9 @@ export default function App() {
                 </div>
 
                 <div className="glass-card p-4 space-y-3">
-                  <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-                    <div className="flex items-center gap-3 text-slate-400">
-                      <Stethoscope className="w-5 h-5" />
-                      <span className="text-sm font-bold uppercase tracking-wider">Symptoms</span>
-                    </div>
-                    <button 
-                      onClick={() => setIsLiveAssessmentOpen(true)}
-                      className="flex items-center gap-2 px-3 py-1 bg-emerald-100 text-emerald-600 rounded-full text-[10px] font-bold uppercase tracking-wider hover:bg-emerald-200 transition-all"
-                    >
-                      <Mic className="w-3 h-3" />
-                      Talk to AI
-                    </button>
+                  <div className="flex items-center gap-3 text-slate-400">
+                    <Stethoscope className="w-5 h-5" />
+                    <span className="text-sm font-bold uppercase tracking-wider">Symptoms</span>
                   </div>
                   <textarea 
                     placeholder="Describe what you see (e.g. high fever, coughing, rash on chest...)"
@@ -348,7 +343,7 @@ export default function App() {
                 )}
 
                 <button 
-                  onClick={handleAnalyze}
+                  onClick={() => handleAnalyze()}
                   disabled={loading}
                   className="w-full py-5 bg-emerald-500 text-white rounded-3xl font-bold text-lg shadow-xl shadow-emerald-100 flex items-center justify-center gap-3 hover:bg-emerald-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
@@ -528,6 +523,7 @@ export default function App() {
           setAge(data.age);
           setSymptoms(data.symptoms);
           setIsLiveAssessmentOpen(false);
+          handleAnalyze(data);
         }}
       />
     </div>

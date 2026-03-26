@@ -1,20 +1,30 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# KINGA 🛡️
 
-# Run and deploy your AI Studio app
+**Empowering Frontline Health Volunteers with AI-Driven Decision Support.**
 
-This contains everything you need to run your app locally.
+## The Problem
+In rural East Africa, Community Health Volunteers (CHVs) serve as the first line of defense against preventable childhood illnesses like malaria and pneumonia. However, these volunteers often face the "diagnostic gap"—lacking the specialized training and immediate access to clinical expertise needed to make life-saving decisions within the critical 24-hour window of an acute illness. Furthermore, inconsistent internet connectivity and language barriers often hinder the quality of care provided.
 
-View your app in AI Studio: https://ai.studio/apps/72da507d-d45c-4c26-bb04-1c2ed1550b8d
+## The Solution
+KINGA is an AI-powered "Decision Support Tool" designed to bridge this gap. KINGA functions as a digital assistant that lives in the pocket of the volunteer, providing real-time, intelligent guidance to help identify symptoms and triage patients according to urgency.
 
-## Run Locally
+It is designed to be a collaborator, not a replacement, for medical professionals, ensuring that every volunteer has the confidence and information they need to act decisively in the field.
 
-**Prerequisites:**  Node.js
+## Key Features
+- **Multimodal Triage**: Uses advanced AI to analyze photos of symptoms alongside reported patient history to provide instant assessment.
+- **Traffic Light Urgency System**: Simplifies complex medical output into actionable protocols: **Red** (Emergency/Hospital), **Yellow** (Schedule Visit), **Green** (Monitor at home).
+- **Offline-First Architecture**: Built for environments with limited connectivity; data is processed and cached locally, syncing with central systems only when a connection is established.
+- **Localized Guidance**: Offers support in local languages (e.g., Swahili), ensuring that language is never a barrier to quality healthcare.
+- **Outbreak Monitoring**: Enables the automatic compilation of anonymized symptom data, providing district health officials with real-time insights into potential disease outbreaks.
+- **Voice-First Interaction**: Integrated with Gemini Live API to allow volunteers to record patient details and symptoms through natural conversation.
 
+## Our Mission
+To reduce preventable child mortality by equipping frontline health workers with the intelligence they need to make the right decision, at the right time, in the right place.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+---
+
+### Technical Stack
+- **Frontend**: React 19, Vite, Tailwind CSS, Motion (Framer Motion)
+- **AI Engine**: Google Gemini 3.1 Flash (for analysis) & Gemini 2.5 Flash Native Audio (for Live Voice)
+- **Local Database**: IndexedDB (via `idb`) for offline-first data persistence
+- **Icons**: Lucide React

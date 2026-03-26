@@ -24,7 +24,9 @@ export const OutbreakAlertModal: React.FC<OutbreakAlertModalProps> = ({
   result,
   onSend
 }) => {
-  const summary = `
+  const [note, setNote] = React.useState('');
+
+  const getSummary = () => `
 OUTBREAK ALERT - KINGA SYSTEM
 -----------------------------
 Date: ${format(new Date(), 'yyyy-MM-dd HH:mm')}
@@ -33,7 +35,7 @@ Likely Condition: ${result.condition}
 Patient: ${patientName} (${age})
 Symptoms: ${symptoms}
 Location: [Volunteer's Assigned Area]
------------------------------
+${note ? `Note: ${note}\n` : ''}-----------------------------
 Critical Concern: AI detected a potential cluster based on these symptoms.
   `.trim();
 
@@ -73,8 +75,20 @@ Critical Concern: AI detected a potential cluster based on these symptoms.
                 </p>
 
                 <div className="bg-slate-50 rounded-2xl p-4 font-mono text-[11px] text-slate-700 whitespace-pre-wrap border border-slate-200">
-                  {summary}
+                  {getSummary()}
                 </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">
+                  Additional Note (Optional)
+                </label>
+                <textarea
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                  placeholder="Add any extra context or observations..."
+                  className="w-full h-20 p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 outline-none focus:border-red-500 transition-all resize-none"
+                />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
@@ -101,7 +115,7 @@ Critical Concern: AI detected a potential cluster based on these symptoms.
 
             <div className="p-6 bg-slate-50 border-t border-slate-100">
               <button
-                onClick={() => onSend(summary)}
+                onClick={() => onSend(getSummary())}
                 className="w-full py-4 bg-red-600 text-white rounded-2xl font-bold flex items-center justify-center gap-3 shadow-lg shadow-red-100 hover:bg-red-700 transition-all active:scale-95"
               >
                 <Send className="w-5 h-5" />

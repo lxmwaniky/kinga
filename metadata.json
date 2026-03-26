@@ -1,0 +1,8 @@
+{
+  "name": "Kinga",
+  "description": "An AI-Enabled tool for Community Health Volunteers to simplify diagnostics for malaria, pneumonia, and malnutrition, with real-time outbreak alerts for district officials.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}

@@ -1,0 +1,25 @@
+name: Build and Deploy app
+
+on: 
+    push:
+        branches:
+            - main
+
+jobs:
+    build-deploy:
+        name: Build and Deploy app
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Setup Node 22
+              uses: actions/setup-node@v6
+              with: 
+                node-version: 22
+            
+            - name: Build the app
+              run: |
+                npm install
+                npm run build
+                
